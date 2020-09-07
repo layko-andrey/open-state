@@ -31,7 +31,7 @@ jobs:
       mongodb:
         image: mongo:3.4.23
         ports: 
-          - 27017:${{ jobs.tests.env.MONGODB_PORT }} 
+          - 27017:${{ tests.env.MONGODB_PORT }} 
            
         env:
           MONGO_INITDB_ROOT_USERNAME: ${{ MONGODB_USERNAME }}
