@@ -72,15 +72,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Test_Results
-          path: build/reports/tests/test/index.html 
-
-
-      - id: save_build_artifacts  
-        uses: actions/upload-artifact@v2
-        with:
-          name: Artifacts
-          path: build/libs
-      
+          path: build/reports/tests/test/index.html      
      
   
   build:
