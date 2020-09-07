@@ -31,11 +31,12 @@ jobs:
       mongodb:
         image: mongo:3.4.23
         ports: 
-          - 27017:$MONGODB_PORT
+          - 27017:${{ env.MONGODB_PORT }} 
+           
         env:
-          MONGO_INITDB_ROOT_USERNAME: $MONGODB_USERNAME 
-          MONGO_INITDB_ROOT_PASSWORD:  $MONGODB_PASSWORD
-          MONGO_INITDB_DATABASE: $MONGODB_DATABASE
+          MONGO_INITDB_ROOT_USERNAME: ${{ env.MONGODB_USERNAME }}
+          MONGO_INITDB_ROOT_PASSWORD:  ${{ env.MONGODB_PASSWORD }}
+          MONGO_INITDB_DATABASE: ${{ env.MONGODB_DATABASE }}
     
     steps:
       
