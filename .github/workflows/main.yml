@@ -15,7 +15,30 @@ jobs:
   tests:
     name: Run tests
     runs-on: ubuntu-latest
+    
+    env:
+    
+      MONGODB_HOST: localhost
+      MONGODB_PORT: 27017
+      MONGODB_DATABASE: open_state
+      MONGODB_USERNAME: open_state
+      MONGODB_PASSWORD: open_state
+      MONGODB_AUTH_DB: admin
+    
+    
+    services:
+      
+      mongodb:
+        image: mongo:3.4.23
+        ports: 
+          - 27017:$MONGODB_PORT
+        env:
+          MONGO_INITDB_ROOT_USERNAME: $MONGODB_USERNAME 
+          MONGO_INITDB_ROOT_PASSWORD:  $MONGODB_PASSWORD
+          MONGO_INITDB_DATABASE: $MONGODB_DATABASE
+    
     steps:
+      
       - id: checkout_repository
         name: Checkout repository
         uses: actions/checkout@v2
@@ -36,6 +59,7 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    needs: [tests]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
