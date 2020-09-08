@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Deploy Open State
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the 2.x.x-REACTIVE branch
@@ -15,6 +15,7 @@ jobs:
   tests:
     name: Run tests
     runs-on: ubuntu-latest
+    continue-on-error: false
     
     env:
     
@@ -72,25 +73,32 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Test_Results
-          path: build/reports/tests/test/**      
+          path: build/reports/tests/test/**
+          
+      - id: execute_test_coverage_report
+        name: Execute test coverage report
+        run: ./gradlew jacocoTestReport
+     
+      - id: save_test_coverage_report_results
+        name: Save test coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: Test_Coverage_Report
+          path: build/reports/jacoco/test/html/**
      
   
   build:
-    # The type of runner that the job will run on
+    name: Build project
     runs-on: ubuntu-latest
+    continue-on-error: false
     needs: [tests]
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
+   
       - name: Run a one-line script
         run: echo Hello, world!
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+    
