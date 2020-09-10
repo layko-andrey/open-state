@@ -72,7 +72,7 @@ jobs:
         name: Save test execution results
         uses: actions/upload-artifact@v2
         with:
-          name: Test_Results_${{ GITHUB_SHA_SHORT }}
+          name: Test_Results_${{ github.sha }}
           path: build/reports/tests/test/**
           
       - id: execute_test_coverage_report
@@ -83,7 +83,7 @@ jobs:
         name: Save test coverage report
         uses: actions/upload-artifact@v2
         with:
-          name: Test_Coverage_Report_${{ GITHUB_SHA_SHORT }}
+          name: Test_Coverage_Report_${{ github.sha }}
           path: build/reports/jacoco/test/html/**
      
   
@@ -113,7 +113,7 @@ jobs:
         name: Save assembles
         uses: actions/upload-artifact@v2
         with:
-          name: Save_Built_Assembles_${{ GITHUB_SHA_SHORT }}
+          name: Save_Built_Assembles_${{ github.sha }}
           path: build/libs/*.jar
         
         
