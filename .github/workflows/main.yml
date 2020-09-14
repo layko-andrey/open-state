@@ -17,16 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: false
     
-    env:
-    
-      MONGODB_HOST: localhost
-      MONGODB_PORT: 27017
-      MONGODB_DATABASE: open_state
-      MONGODB_USERNAME: open_state
-      MONGODB_PASSWORD: open_state
-      MONGODB_AUTH_DB: admin
-    
-    
     services:
       
       mongodb:
@@ -35,7 +25,7 @@ jobs:
           - 27017:27017           
         env:
           MONGO_INITDB_ROOT_USERNAME: open_state
-          MONGO_INITDB_ROOT_PASSWORD:  open_state
+          MONGO_INITDB_ROOT_PASSWORD: open_state
           MONGO_INITDB_DATABASE: open_state
         
       redis:
