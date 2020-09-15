@@ -113,14 +113,17 @@ jobs:
     needs: [tests, build]
         
     steps:
-      - id: package_date
+      - id: package_info
         name: Get package building bate
-        run: echo "::set-output name=package_date::$(date +%Y%m%d-%H%M%S)"
+        run: |
+          echo "##[set-output name=current_branch;]$(echo ${GITHUB_REF#refs/heads/})"
+          echo "::set-output name=commit_sha::$(git rev-parse --short HEAD)"
+          echo "::set-output name=package_date::$(date +%Y_%m_%d-%H_%M_%S)"
         
       - id: build_docker_image
         name: Build Docker image
         env:
-          DOCKER_IMAGE_TAG: ${{ github.ref }}_${{ steps.package_date.outputs.package_date }}_${{ github.sha }}
+          DOCKER_IMAGE_TAG: ${{ steps.package_info.outputs.current_branch }}_${{ steps.package_info.outputs.package_date }}_${{  steps.package_info.outputs.commit_sha }}
         run: docker build --tag $DOCKER_IMAGE_TAG --file docker/Dockerfile
            
         
