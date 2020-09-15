@@ -120,7 +120,7 @@ jobs:
       - id: build_docker_image
         name: Build Docker image
         env:
-          DOCKER_IMAGE_TAG: ${{ github.ref }}_${{ steps.package_date.outputs.package_date }}_${{ github.sha::8 }}
+          DOCKER_IMAGE_TAG: ${{ github.ref }}_${{ steps.package_date.outputs.package_date }}_${{ github.sha }}
         run: docker build --tag $DOCKERIMAGE_TAG --file docker/Dockerfile
            
         
