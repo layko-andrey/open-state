@@ -115,7 +115,7 @@ jobs:
     steps:
         
       - id: Initialize environment variables
-      - name: Initialize environment variables
+        name: Initialize environment variables
         uses: rlespinasse/github-slug-action@v2.0.0
         
       - id: package_info
