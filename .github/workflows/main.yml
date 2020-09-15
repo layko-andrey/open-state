@@ -105,5 +105,23 @@ jobs:
         with:
           name: Save_Built_Assembles_${{ github.sha }}
           path: build/libs/*.jar
+      
+  package:
+    name: Create application image
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    needs: [tests, build]
+        
+    steps:
+      - id: package_date
+        name: Get package building bate
+        run: echo "::set-output name=package_date::$(date +%Y%m%d-%H%M%S)"
+        
+      - id: build_docker_image
+        name: Build Docker image
+        env:
+          DOCKER_IMAGE_TAG: ${{ github.ref }}_${{ steps.package_date.outputs.package_date }}_${{ github.sha::8 }}
+        run: docker build --tag $DOCKERIMAGE_TAG --file docker/Dockerfile
+           
         
         
