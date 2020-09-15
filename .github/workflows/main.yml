@@ -116,7 +116,7 @@ jobs:
         
       - id: initialize_environment_variables
         name: Initialize environment variables
-        uses: rlespinasse/github-slug-action@v2.0
+        uses: rlespinasse/github-slug-action@v2.x
         
       - id: package_info
         name: Get package building bate
