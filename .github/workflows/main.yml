@@ -113,6 +113,11 @@ jobs:
     needs: [tests, build]
         
     steps:
+        
+      - id: Initialize environment variables
+      - name: Initialize environment variables
+        uses: rlespinasse/github-slug-action@v2.0.0
+        
       - id: package_info
         name: Get package building bate
         run: |
@@ -123,7 +128,7 @@ jobs:
       - id: build_docker_image
         name: Build Docker image
         env:
-          DOCKER_IMAGE_TAG: ${{ steps.package_info.outputs.current_branch }}_${{ steps.package_info.outputs.package_date }}_${{  steps.package_info.outputs.commit_sha }}
+          DOCKER_IMAGE_TAG: ${{ env.GITHUB_REF_SLUG }}_${{ steps.package_info.outputs.package_date }}_$${{ env.GITHUB_SHA_SHORT }}
         run: docker build --tag $DOCKER_IMAGE_TAG --file docker/Dockerfile
            
         
