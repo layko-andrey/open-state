@@ -129,8 +129,11 @@ jobs:
         
       - id: build_docker_image  
         name: Push to GitHub Packages
+        env: 
+          GITHUB_DOCKER_PACKAGES_REGISTRY: https://docker.pkg.github.com
         run: |
-          docker login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} https://docker.pkg.github.com
+          docker login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ${{ GITHUB_DOCKER_PACKAGES_REGISTRY }}
+          docker build --tag ${{ GITHUB_DOCKER_PACKAGES_REGISTRY }}:${{ env.GITHUB_SHA_SHORT }} --file ./Dockerfile .
         
           #ags: ${{ env.GITHUB_REF_SLUG }}_${{ steps.package_info.outputs.package_date }}_${{ env.GITHUB_SHA_SHORT }}
                
