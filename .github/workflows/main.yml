@@ -125,11 +125,15 @@ jobs:
           echo "::set-output name=commit_sha::$(git rev-parse --short HEAD)"
           echo "::set-output name=package_date::$(date +%Y_%m_%d-%H_%M_%S)"
         
-      - id: build_docker_image
-        name: Build Docker image
-        env:
-          DOCKER_IMAGE_TAG: ${{ env.GITHUB_REF_SLUG }}_${{ steps.package_info.outputs.package_date }}_${{ env.GITHUB_SHA_SHORT }}
-        run: docker build --tag $DOCKER_IMAGE_TAG --file docker/Dockerfile
-           
+      - id: build_docker_image2   
+        name: Push to GitHub Packages
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: OpenFuturePlatform/open-state/open-state
+          tag: ${{ env.GITHUB_REF_SLUG }}_${{ steps.package_info.outputs.package_date }}_${{ env.GITHUB_SHA_SHORT }}
+               
         
         
