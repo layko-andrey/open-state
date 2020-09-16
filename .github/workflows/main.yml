@@ -133,6 +133,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
           repository: open-future-platform/open-state/open-state
+          file: ./Dockerfile
           tags: ${{ env.GITHUB_REF_SLUG }}_${{ steps.package_info.outputs.package_date }}_${{ env.GITHUB_SHA_SHORT }}
                
         
