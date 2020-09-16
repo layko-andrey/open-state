@@ -133,9 +133,9 @@ jobs:
           GITHUB_DOCKER_PACKAGES_REGISTRY: https://docker.pkg.github.com
         run: |
           docker login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ${{ env.GITHUB_DOCKER_PACKAGES_REGISTRY }}
-          docker build --tag ${{ env.GITHUB_DOCKER_PACKAGES_REGISTRY }}:${{ env.GITHUB_SHA_SHORT }} --file ./Dockerfile .
+          docker build -t ${{ env.GITHUB_DOCKER_PACKAGES_REGISTRY }}/openfutureplatform/open-state:${{ env.GITHUB_REF_SLUG }}_${{ steps.package_info.outputs.package_date }}_${{ env.GITHUB_SHA_SHORT }} -f ./Dockerfile .
         
-          #ags: ${{ env.GITHUB_REF_SLUG }}_${{ steps.package_info.outputs.package_date }}_${{ env.GITHUB_SHA_SHORT }}
+          
                
         
         
