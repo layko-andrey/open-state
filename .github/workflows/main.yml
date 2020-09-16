@@ -132,7 +132,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: OpenFuturePlatform/open-state/open-state
+          repository: open-future-platform/open-state/open-state
           tags: ${{ env.GITHUB_REF_SLUG }}_${{ steps.package_info.outputs.package_date }}_${{ env.GITHUB_SHA_SHORT }}
                
         
