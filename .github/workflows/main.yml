@@ -114,15 +114,17 @@ jobs:
         
     steps:
         
+      - id: checkout_repository
+        name: Checkout repository
+        uses: actions/checkout@v2
+        
       - id: initialize_environment_variables
         name: Initialize environment variables
         uses: rlespinasse/github-slug-action@v2.x
         
       - id: package_info
         name: Get package building bate
-        run: |
-          echo "##[set-output name=current_branch;]$(echo ${GITHUB_REF#refs/heads/})"
-          echo "::set-output name=commit_sha::$(git rev-parse --short HEAD)"
+        run: 
           echo "::set-output name=package_date::$(date +%Y_%m_%d-%H_%M_%S)"
         
       - id: build_docker_image2   
