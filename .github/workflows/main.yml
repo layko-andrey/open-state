@@ -129,14 +129,14 @@ jobs:
         
       - id: build_docker_image2   
         name: Push to GitHub Packages
-        uses: docker/build-push-action@v1
+        uses: docker/build-push-action@v2
         with:
           context: .
           file: ./Dockerfile
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: open-future-platform/open-state/open-state
+          push: true
           tags: ${{ env.GITHUB_REF_SLUG }}_${{ steps.package_info.outputs.package_date }}_${{ env.GITHUB_SHA_SHORT }}
                
         
