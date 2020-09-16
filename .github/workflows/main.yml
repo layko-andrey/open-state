@@ -129,6 +129,7 @@ jobs:
         
       - id: build_docker_image  
         name: Push to GitHub Packages
+        working-directory: ./
         env: 
           GITHUB_DOCKER_PACKAGES_REGISTRY: docker.pkg.github.com
         run: |
