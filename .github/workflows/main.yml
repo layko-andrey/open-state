@@ -125,7 +125,14 @@ jobs:
       - id: package_info
         name: Get package building bate
         run: 
-          echo "::set-output name=package_date::$(date +%Y_%m_%d-%H_%M_%S)"      
+          echo "::set-output name=package_date::$(date +%Y_%m_%d-%H_%M_%S)"
+          
+      - id: download_artifacts
+        name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: Save_Built_Assembles_${{ github.sha }}
+          path: build/libs
         
       - id: build_docker_image  
         name: Push to GitHub Packages
