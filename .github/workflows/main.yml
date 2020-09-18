@@ -1,7 +1,11 @@
 name: Open State CI/CD
 
 on:
-  [push, pull_request]
+  pull_request:
+    types: [synchronize, closed]
+    branches:
+      - master
+      - 2.x.x-REACTIVE
   
 jobs:
 
