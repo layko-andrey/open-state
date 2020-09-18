@@ -3,7 +3,8 @@ name: Open State CI/CD
 on:
   push:
     branches:
-      - '*'
+      - master
+      - 2.x.x-REACTIVE
 
   pull_request:
     branches:
@@ -93,3 +94,4 @@ jobs:
         with:
           name: assembles_${{ github.sha }}
           path: build/libs/*.jar
+          
