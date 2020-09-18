@@ -8,6 +8,4 @@ interface WalletService {
 
     suspend fun findByAddress(address: String): Wallet
     
-    
-    
 }
