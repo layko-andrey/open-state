@@ -1,16 +1,6 @@
 name: Open State CI/CD
 
-on:
-  
-  push:
-    branches: 
-      - '*'
-  
-  pull_request:
-    types: [closed]
-    branches:
-      - master
-      - 2.x.x-REACTIVE
+on: [push]
   
 jobs:
 
