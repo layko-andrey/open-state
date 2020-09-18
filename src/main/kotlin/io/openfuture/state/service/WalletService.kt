@@ -7,4 +7,7 @@ interface WalletService {
     suspend fun save(address: String, webhook: String): Wallet
 
     suspend fun findByAddress(address: String): Wallet
+    
+    
+    
 }
