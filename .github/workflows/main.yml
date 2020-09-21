@@ -110,7 +110,7 @@ jobs:
         name: Create package meta information
         run: |
           echo "::set-output name=commit_sha::$(git rev-parse --short HEAD)"
-          echo "::set-output name=package_timestamp::$(date +%Y-%m-%d-%H-%M-%S)"
+          echo "::set-output name=package_timestamp::$(date +%Y-%m-%d_%H-%M-%S)"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
