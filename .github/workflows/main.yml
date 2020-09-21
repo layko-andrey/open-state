@@ -129,7 +129,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: openplatform/open-state:latest
+          tags: openplatform/open-state:${{ steps.pacake_meta_info.outputs.package_timestamp }}_${{ steps.pacake_meta_info.outputs.commit_sha }}
           file: docker/Dockerfile
           
           
