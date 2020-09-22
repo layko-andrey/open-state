@@ -1,6 +1,11 @@
 name: Open State CI/CD
 
-on: [push]
+on: 
+  push:
+    branches: 
+      - '*'    
+    tags: 
+      - '*'
   
 jobs:
 
