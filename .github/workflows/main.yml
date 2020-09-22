@@ -111,6 +111,7 @@ jobs:
             
       - id: pacake_meta_info
         name: Create package meta information
+        if: github.event.release.base.ref == '2.x.x.RELEASE' 
         run: |
           echo "::set-output name=commit_sha::$(git rev-parse --short HEAD)"
           echo "::set-output name=package_timestamp::$(date +%Y-%m-%d_%H-%M-%S)"
