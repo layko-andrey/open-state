@@ -31,6 +31,10 @@ jobs:
           - 6379:6379
 
     steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github.event) }}
+        run: echo "$GITHUB_CONTEXT"
 
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -111,7 +115,7 @@ jobs:
             
       - id: pacake_meta_info
         name: Create package meta information
-        if: github.event.release.base.ref == '2.x.x.RELEASE' 
+        #if: github.event.release.base.ref == '2.x.x.RELEASE' 
         run: |
           echo "::set-output name=commit_sha::$(git rev-parse --short HEAD)"
           echo "::set-output name=package_timestamp::$(date +%Y-%m-%d_%H-%M-%S)"
