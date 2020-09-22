@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: false
     needs: [tests]
-    if: github.event.release.type == 'published'
+    if: github.event.action == 'published'
 
     steps:
 
@@ -97,8 +97,6 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: false
     needs: [tests, build]
-
-    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/2.x.x-REACTIVE'
 
     steps:
 
