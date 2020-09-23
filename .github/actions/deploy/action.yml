@@ -3,7 +3,7 @@ description: Deploy project image to server
 
 inputs:
 
-  ssh key:
+  sshKey:
     description: 'SSH key to connect to server'
     required: true
     
@@ -11,11 +11,11 @@ inputs:
     description: 'Target server address'
     required: true
   
-  docker user:
+  dockerUser:
     description: 'DockerHub user name'
     required: true
     
-  docker password:
+  dockerPassword:
     description: 'DockerHub user password'
     required: true
     
@@ -31,7 +31,7 @@ runs:
         apk add --no-cache py-pip py-paramiko
         pip install docker-compose==1.23.2
         eval $(ssh-agent -s)
-        echo "$SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+        echo "$SSHKEY" | tr -d '\r' | ssh-add - > /dev/null
         mkdir -p ~/.ssh
         chmod 700 ~/.ssh
         ssh-keyscan $SERVER >> ~/.ssh/known_hosts
