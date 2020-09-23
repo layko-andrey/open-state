@@ -137,9 +137,12 @@ jobs:
     needs: [tests, build, package]
     
     steps:
+      
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       - name: Deploy server
-        uses: layko-andrey/open-state/actions/deploy
+        uses: ./.github/actions/deploy
         with:
           sshKey: ${{ secrets.SPRINT_DEPLOY_SSH_KEY }}
           server: ${{ secrets.SPRINT_SERVER }}
