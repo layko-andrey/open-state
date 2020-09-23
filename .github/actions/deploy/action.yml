@@ -27,8 +27,8 @@ runs:
   using: "composite"
   steps: 
     - run: |
-        apk add --no-cache openssh-client
-        apk add --no-cache py-pip py-paramiko
+        sudo apt install openssh-client
+        sudo apt-get install python3-pip
         pip install docker-compose==1.23.2
         eval $(ssh-agent -s)
         echo "$SSHKEY" | tr -d '\r' | ssh-add - > /dev/null
