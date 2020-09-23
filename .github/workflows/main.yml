@@ -139,9 +139,9 @@ jobs:
     steps:
 
       - name: Deploy server
-        uses: actions/deploy
+        uses: layko-andrey/open-state/actions/deploy
         with:
-          sshKey: ${{ secrets.SPRINT_SSH_KEY }}
+          sshKey: ${{ secrets.SPRINT_DEPLOY_SSH_KEY }}
           server: ${{ secrets.SPRINT_SERVER }}
           dockerUser: ${{ secrets.DOCKERHUB_USER_NAME }}
           dockerPassword: ${{ secrets.DOCKERHUB_PASSWORD }}
