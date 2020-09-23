@@ -130,3 +130,19 @@ jobs:
           file: docker/Dockerfile
           
           
+  deploy-sprint:
+    name: Deploy Sprint
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    needs: [tests, build, package]
+    
+    steps:
+
+      - name: Deploy server
+        uses: actions/deploy
+        with:
+          sshKey: ${{ secrets.SPRINT_SSH_KEY }}
+          server: ${{ secrets.SPRINT_SERVER }}
+          dockerUser: ${{ secrets.DOCKERHUB_USER_NAME }}
+          dockerPassword: ${{ secrets.DOCKERHUB_PASSWORD }}
+          image: ${{ github.event.release.tag_name }}
