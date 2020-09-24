@@ -31,7 +31,7 @@ runs:
         sudo apt-get install python3-pip
         pip install docker-compose==1.23.2
         eval $(ssh-agent -s)
-        echo "$SSHKEY" | tr -d '\r' | ssh-add - > /dev/null
+        echo "${SSHKEY}" | tr -d '\r' | ssh-add - > /dev/null
         mkdir -p ~/.ssh
         chmod 700 ~/.ssh
         ssh-keyscan $SERVER >> ~/.ssh/known_hosts
