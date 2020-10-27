@@ -25,4 +25,6 @@ class ExceptionHandler {
         return ErrorDto(HttpStatus.BAD_REQUEST.value(), "Invalid parameters", fieldErrors)
     }
 
+    
+    
 }
