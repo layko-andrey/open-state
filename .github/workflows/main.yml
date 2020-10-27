@@ -107,7 +107,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: assembles_${{ github.sha }}
-          path: ../docker/build/libs
+          path: build/libs
             
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -125,6 +125,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
+          context: .
           push: true
           tags: openplatform/open-state:${{ github.event.release.tag_name }}
           file: docker/Dockerfile
