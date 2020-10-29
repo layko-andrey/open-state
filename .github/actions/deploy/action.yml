@@ -27,9 +27,9 @@ runs:
   using: "composite"
   steps: 
     - run: |
-        echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        echo ==============================================
         echo "$SSHKEY"
-        echo "-----------------------------"
+        echo ==============================================
         sudo apt install openssh-client
         sudo apt-get install python3-pip
         pip install docker-compose==1.23.2
