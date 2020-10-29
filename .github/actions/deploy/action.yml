@@ -28,6 +28,7 @@ runs:
   steps: 
     - run: |
         echo ==============================================
+        echo "$SERVER"
         echo "$SSHKEY"
         echo ==============================================
         sudo apt install openssh-client
