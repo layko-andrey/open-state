@@ -3,7 +3,7 @@ description: Deploy project image to server
 
 inputs:
 
-  sshKey:
+  SSHKEY:
     description: 'SSH key to connect to server'
     required: true
     
@@ -27,6 +27,7 @@ runs:
   using: "composite"
   steps: 
     - run: |
+        echo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
         echo "$SSHKEY"
         echo "-----------------------------"
         sudo apt install openssh-client
