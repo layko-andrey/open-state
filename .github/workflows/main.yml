@@ -139,8 +139,16 @@ jobs:
     
     steps:
       
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: ls -a via ssh
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            cd /tmp
+            ls -a
+          host: ${{ secrets.SPRINT_SERVER }}
+          user: ${{ secrets.DOCKERHUB_USER_NAME }}
+          key:  ${{ secrets.SPRINT_DEPLOY_SSH_KEY }}
+      
 
       - name: Deploy server
         uses: ./.github/actions/deploy
