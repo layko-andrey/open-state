@@ -143,7 +143,7 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            docker login -u ${{ secrets.DOCKERHUB_USER_NAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }} hub.docker.com | ls -a
+            docker login -u ${{ secrets.DOCKERHUB_USER_NAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }} hub.docker.com
           host: ${{ secrets.SPRINT_SERVER }}
           user: ${{ secrets.DOCKERHUB_USER_NAME }}
           key:  ${{ secrets.SPRINT_DEPLOY_SSH_KEY }}
