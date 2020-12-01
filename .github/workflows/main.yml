@@ -142,5 +142,6 @@ jobs:
       - name: Deploy server
         run: |
           sudo apt install openssh-client
+          sudo apt-get install python-setuptools python-dev build-essential
           sudo apt install python3-pip
           pip3 install docker-compose==1.23.2
