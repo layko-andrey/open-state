@@ -139,9 +139,9 @@ jobs:
     
     steps:
       
-      - name: Deploy server\
+      - name: Deploy server
         run: |
           sudo apt install openssh-client
           sudo apt-get install python3-pip
-          pip install docker-compose==1.23.2
+          pip install docker-compose==1.27.4
           eval $(ssh-agent -s)
