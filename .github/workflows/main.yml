@@ -150,7 +150,7 @@ jobs:
           ssh-keyscan ${{ secrets.SPRINT_SERVER }} >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
           export DOCKER_HOST="ssh://gitlab@${{ secrets.SPRINT_SERVER }}"
-          docker login -u openplatform -p CyGnkzv40yt hub.docker.com
+          docker login -u openplatform -p CyGnkzv40yt
           docker-compose -f docker-compose-server.yml up -d
 
 
