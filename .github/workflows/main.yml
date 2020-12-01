@@ -143,5 +143,5 @@ jobs:
         run: |
           sudo apt install openssh-client
           sudo apt-get install python3-pip
-          pip install docker-compose==1.27.4
+          pip install docker-compose==1.26.2
           eval $(ssh-agent -s)
