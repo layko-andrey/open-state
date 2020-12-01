@@ -139,21 +139,9 @@ jobs:
     
     steps:
       
-      - name: ls -a via ssh
-        uses: fifsky/ssh-action@master
-        with:
-          command: |
-            docker login -u ${{ secrets.DOCKERHUB_USER_NAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }} hub.docker.com
-          host: ${{ secrets.SPRINT_SERVER }}
-          user: ${{ secrets.DOCKERHUB_USER_NAME }}
-          key:  ${{ secrets.SPRINT_DEPLOY_SSH_KEY }}
-      
-
-      - name: Deploy server
-        uses: ./.github/actions/deploy
-        with:
-          sshKey: ${{ secrets.SPRINT_DEPLOY_SSH_KEY }}
-          server: ${{ secrets.SPRINT_SERVER }}
-          dockerUser: ${{ secrets.DOCKERHUB_USER_NAME }}
-          dockerPassword: ${{ secrets.DOCKERHUB_PASSWORD }}
-          image: ${{ github.event.release.tag_name }}
+      - name: Deploy server\
+        run: |
+          sudo apt install openssh-client
+          sudo apt-get install python3-pip
+          pip install docker-compose==1.23.2
+          eval $(ssh-agent -s)
