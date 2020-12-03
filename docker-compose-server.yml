@@ -1,7 +1,7 @@
 version: "2.4"
 services:
   backend:
-    image: ${ IMAGE_TAG }
+    image: $IMAGE_TAG
     depends_on:
       - mongo
       - redis
@@ -12,7 +12,7 @@ services:
       - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: open_state
-      MONGO_INITDB_ROOT_PASSWORD: ${ MONGODB_PASSWORD }
+      MONGO_INITDB_ROOT_PASSWORD: $MONGODB_PASSWORD
   redis:
     image: redis:6.0.7
     ports:
