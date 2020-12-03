@@ -152,8 +152,9 @@ jobs:
           chmod 700 ~/.ssh
           ssh-keyscan ${{ secrets.SPRINT_SERVER }} >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
-          ls -a
           export DOCKER_HOST="ssh://gitlab@${{ secrets.SPRINT_SERVER }}"
+          export MONGODB_PASSWORD="${{ secrets.MONGO_PASSWORD }}"
+          export IMAGE_TAG="openplatform/open-state:${{ github.event.release.tag_name }}"
           docker login -u ${{ secrets.DOCKERHUB_USER_NAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
           docker-compose -f docker-compose-server.yml up -d
           docker image ls --filter reference=openplatform/open-state:${{ github.event.release.tag_name }} -q | tail -n +4 | xargs --no-run-if-empty docker image rm

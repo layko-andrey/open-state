@@ -1,9 +1,10 @@
 version: "2.4"
 services:
   backend:
-    image: openplatform/open-state:${{ github.event.release.tag_name }}
+    image: ${ IMAGE_TAG }
     depends_on:
       - mongo
+      - redis
   mongo:
     image: mongo:4.4.0
     restart: always
@@ -11,7 +12,7 @@ services:
       - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: open_state
-      MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+      MONGO_INITDB_ROOT_PASSWORD: ${ MONGODB_PASSWORD }
   redis:
     image: redis:6.0.7
     ports:
