@@ -3,42 +3,47 @@ description: Deploy project image to server
 
 inputs:
 
-  SSHKEY:
-    description: 'SSH key to connect to server'
+  SSH_KEY:
+    description: 'SSH key to access to remote server'
     required: true
-    
-  server:
-    description: 'Target server address'
+
+  REMOTE_SERVER:
+    description: 'Remote server to deploy to'
     required: true
   
-  dockerUser:
-    description: 'DockerHub user name'
+  DOCKER_USER_NAME:
+    description: 'Docker registry user name'
     required: true
     
-  dockerPassword:
-    description: 'DockerHub user password'
+  DOCKER_PASSWORD:
+    description: 'Docker registry password'
     required: true
     
-  image:
-    description: 'Docker image to deploy'
+  DOCKER_IMAGE_TAG:
+    description: 'Docker image tag to start'
+    required: true
+
+  MONGODB_PASSWORD:
+    description: 'Mongo DB password'
     required: true
     
 runs:
   using: "composite"
   steps: 
     - run: |
-        echo ==============================================
-        echo "$SERVER"
-        echo "$SSHKEY"
-        echo ==============================================
         sudo apt install openssh-client
-        sudo apt-get install python3-pip
-        pip install docker-compose==1.23.2
+        sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
         eval $(ssh-agent -s)
-        echo "$SSHKEY" | tr -d '\r' | ssh-add - > /dev/null
+        echo "${{ SSH_KEY }}" | tr -d '\r' | ssh-add - > /dev/null
         mkdir -p ~/.ssh
         chmod 700 ~/.ssh
-        ssh-keyscan $SERVER >> ~/.ssh/known_hosts
+        ssh-keyscan ${{ REMOTE_SERVER }} >> ~/.ssh/known_hosts
         chmod 644 ~/.ssh/known_hosts
+        export DOCKER_HOST="ssh://gitlab@${{ REMOTE_SERVER }}"
+        export MONGODB_PASSWORD="${{ MONGODB_PASSWORD }}"
+        export IMAGE_TAG="${{ DOCKER_IMAGE_TAG }}"
+        docker login -u ${{ DOCKER_USER_NAME }} -p ${{ DOCKER_PASSWORD }}
+        docker-compose -f docker-compose-server.yml up -d
+        docker image ls --filter reference=${{ DOCKER_IMAGE_TAG }} -q | tail -n +4 | xargs --no-run-if-empty docker image rm
       shell: bash
    

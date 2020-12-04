@@ -141,6 +141,16 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: Deploy server1
+        uses: ./.github/actions/deploy
+        with:
+          SSH_KEY: ${{ secrets.SPRINT_DEPLOY_SSH_KEY }}
+          REMOTE_SERVER: ${{ secrets.SPRINT_SERVER }}
+          DOCKER_USER_NAME: ${{ secrets.DOCKERHUB_USER_NAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+          DOCKER_IMAGE_TAG: openplatform/open-state:${{ github.event.release.tag_name }}
+          MONGODB_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
       
       - name: Deploy server
         run: |
