@@ -37,13 +37,13 @@ runs:
         echo "$SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
         mkdir -p ~/.ssh
         chmod 700 ~/.ssh
-        ssh-keyscan ${{ REMOTE_SERVER }} >> ~/.ssh/known_hosts
+        ssh-keyscan $REMOTE_SERVER >> ~/.ssh/known_hosts
         chmod 644 ~/.ssh/known_hosts
-        export DOCKER_HOST="ssh://gitlab@${{ REMOTE_SERVER }}"
-        export MONGODB_PASSWORD="${{ MONGODB_PASSWORD }}"
-        export IMAGE_TAG="${{ DOCKER_IMAGE_TAG }}"
-        docker login -u ${{ DOCKER_USER_NAME }} -p ${{ DOCKER_PASSWORD }}
+        export DOCKER_HOST="ssh://gitlab@$REMOTE_SERVER"
+        export MONGODB_PASSWORD="$MONGODB_PASSWORD"
+        export IMAGE_TAG="$DOCKER_IMAGE_TAG"
+        docker login -u $DOCKER_USER_NAME -p $DOCKER_PASSWORD
         docker-compose -f docker-compose-server.yml up -d
-        docker image ls --filter reference=${{ DOCKER_IMAGE_TAG }} -q | tail -n +4 | xargs --no-run-if-empty docker image rm
+        docker image ls --filter reference=$DOCKER_IMAGE_TAG -q | tail -n +4 | xargs --no-run-if-empty docker image rm
       shell: bash
    
