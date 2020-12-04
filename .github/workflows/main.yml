@@ -142,15 +142,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Setup deploy
-        run: |
-          export REMOTE_SERVER="${{ secrets.SPRINT_SERVER }}"
-          export DOCKER_HOST="ssh://gitlab@${{ secrets.SPRINT_SERVER }}"
-          export DOCKER_USER_NAME="${{ secrets.DOCKERHUB_USER_NAME }}"
-          export DOCKER_PASSWORD="${{ secrets.DOCKERHUB_PASSWORD }}"
-          export DOCKER_IMAGE_TAG="openplatform/open-state:${{ github.event.release.tag_name }}"
-          export MONGODB_PASSWORD="${{ secrets.MONGO_PASSWORD }}"
-
       - name: Deploy server
         run: |
           sudo apt install openssh-client
@@ -159,11 +150,14 @@ jobs:
           echo "${{ secrets.SPRINT_DEPLOY_SSH_KEY }}" | tr -d '\r' | ssh-add - > /dev/null
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          ssh-keyscan $REMOTE_SERVER >> ~/.ssh/known_hosts
+          ssh-keyscan ${{ secrets.SPRINT_SERVER }} >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
-          docker login -u $DOCKER_USER_NAME -p $DOCKER_PASSWORD
+          export DOCKER_HOST="ssh://gitlab@${{ secrets.SPRINT_SERVER }}"
+          export MONGODB_PASSWORD="${{ secrets.MONGO_PASSWORD }}"
+          export DOCKER_IMAGE_TAG="openplatform/open-state:${{ github.event.release.tag_name }}"
+          docker login -u ${{ secrets.DOCKERHUB_USER_NAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
           docker-compose -f docker-compose-server.yml up -d
-          docker image ls --filter reference=$DOCKER_IMAGE_TAG -q | tail -n +4 | xargs --no-run-if-empty docker image rm
+          docker image ls --filter reference=openplatform/open-state:${{ github.event.release.tag_name }} -q | tail -n +4 | xargs --no-run-if-empty docker image rm
 
 
 
