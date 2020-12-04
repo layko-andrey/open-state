@@ -145,32 +145,26 @@ jobs:
       - name: Setup deploy
         run: |
           export DEPLOY_SSH_KEY="${{ secrets.SPRINT_DEPLOY_SSH_KEY }}"
+          export REMOTE_SERVER="${{ secrets.SPRINT_SERVER }}"
+          export DOCKER_HOST="ssh://gitlab@${{ secrets.SPRINT_SERVER }}"
+          export DOCKER_USER_NAME="${{ secrets.DOCKERHUB_USER_NAME }}"
+          export DOCKER_PASSWORD="${{ secrets.DOCKERHUB_PASSWORD }}"
+          export DOCKER_IMAGE_TAG="openplatform/open-state:${{ github.event.release.tag_name }}"
+          export MONGODB_PASSWORD="${{ secrets.MONGO_PASSWORD }}"
 
-      - name: Deploy server1
-        uses: ./.github/actions/deploy
-        with:
-          REMOTE_SERVER: ${{ secrets.SPRINT_SERVER }}
-          DOCKER_USER_NAME: ${{ secrets.DOCKERHUB_USER_NAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-          DOCKER_IMAGE_TAG: openplatform/open-state:${{ github.event.release.tag_name }}
-          MONGODB_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
-      
       - name: Deploy server
         run: |
           sudo apt install openssh-client
           sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           eval $(ssh-agent -s)
-          echo "${{ secrets.SPRINT_DEPLOY_SSH_KEY }}" | tr -d '\r' | ssh-add - > /dev/null
+          echo "$DEPLOY_SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          ssh-keyscan ${{ secrets.SPRINT_SERVER }} >> ~/.ssh/known_hosts
+          ssh-keyscan $REMOTE_SERVER >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
-          export DOCKER_HOST="ssh://gitlab@${{ secrets.SPRINT_SERVER }}"
-          export MONGODB_PASSWORD="${{ secrets.MONGO_PASSWORD }}"
-          export IMAGE_TAG="openplatform/open-state:${{ github.event.release.tag_name }}"
-          docker login -u ${{ secrets.DOCKERHUB_USER_NAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+          docker login -u $DOCKER_USER_NAME -p $DOCKER_PASSWORD
           docker-compose -f docker-compose-server.yml up -d
-          docker image ls --filter reference=openplatform/open-state:${{ github.event.release.tag_name }} -q | tail -n +4 | xargs --no-run-if-empty docker image rm
+          docker image ls --filter reference=$DOCKER_IMAGE_TAG -q | tail -n +4 | xargs --no-run-if-empty docker image rm
 
 
 
