@@ -161,7 +161,7 @@ jobs:
 
       - name: Deploy server
         run: |
-          ssh -i ./deploy_key gitlab@${{ secrets.DEPLOY_HOST_PROD }} "
+          ssh -i ./deploy_key gitlab@${{ secrets.SPRINT_SERVER }} "
             export MONGODB_PASSWORD="${{ secrets.SPRINT_MONGO_PASSWORD }}" && \
             export DOCKER_IMAGE_TAG="openplatform/open-state:${{ env.IMAGE_TAG }}" && \
             docker login -u ${{ secrets.DOCKERHUB_USER_NAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }} && \
