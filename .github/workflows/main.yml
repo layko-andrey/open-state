@@ -114,7 +114,7 @@ jobs:
 
       - name: Define image tag
         run:
-          if [[ ${{ github.ref }} == refs/heads/master -o ${{ github.ref }} == refs/heads/2.x.x-REACTIVE ]]; then export IMAGE_TAG=latest; else export IMAGE_TAG=${{ github.ref }}#refs/heads/; fi;
+          if [[ ${{ github.ref }} == refs/heads/master || ${{ github.ref }} == refs/heads/2.x.x-REACTIVE ]]; then export IMAGE_TAG=latest; else export IMAGE_TAG=${{ github.ref }}#refs/heads/; fi;
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
