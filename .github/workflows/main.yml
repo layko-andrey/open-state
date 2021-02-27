@@ -174,20 +174,20 @@ jobs:
     needs: [tests, build, package, deploy-sprint]
 
     steps:
+
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Setup SSH connection
+      - name: Deploy server
         run: |
+          sudo apt install openssh-client
+          sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           eval $(ssh-agent -s)
           echo "${{ secrets.PROD_DEPLOY_SSH_KEY }}" | tr -d '\r' | ssh-add - > /dev/null
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           ssh-keyscan ${{ secrets.PROD_SERVER }} >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
-
-      - name: Deploy server
-        run: |
           export DOCKER_HOST="ssh://gitlab@${{ secrets.PROD_SERVER }}"
           export MONGODB_PASSWORD="${{ secrets.PROD_MONGO_PASSWORD }}"
           export DOCKER_IMAGE_TAG="openplatform/open-state:${{ env.IMAGE_TAG }}"
